@@ -34,9 +34,7 @@ const Applications = () => {
         .then((result) => {
           if (result.status === 200 && result.data) {
             const filteredApplications = result.data.filter(
-              (application) =>
-                application.status !== "not-selected" &&
-                application.uid === userData?.uid
+              (application) => application.uid === userData?.uid
             );
             setApplications(filteredApplications);
           }
@@ -102,6 +100,13 @@ const Applications = () => {
           ]}
           data={applications.map((application) => ({
             ...application,
+            status: (
+              <TextElement
+                theme="paragraph"
+                text={application.status}
+                colour={application.status === "not-selected" ? "red" : "black"}
+              />
+            ),
             edit: (
               <FontAwesomeIcon
                 icon={faPencilAlt}

@@ -14,12 +14,6 @@ import {
   ProfileContainer,
   VerticalContainer,
 } from "./styled";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-} from "@firebase/storage";
 import InputContainer from "../../components/input-container/InputContainer";
 import Spacer from "../../components/spacer/Spacer";
 import { getUser } from "../../functions/user/getUser";
@@ -29,7 +23,6 @@ import { generateId } from "../../_utilities/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { updateUser } from "../../functions/user/updateUser";
-import ImageUploadContainer from "../../components/image-upload-container/ImageUploadContainer";
 
 const Profile = () => {
   const { id } = useParams<ProfilePageParams>();
@@ -70,49 +63,49 @@ const Profile = () => {
     }));
   }, []);
 
-  const handleFileUpload = async (files: File[], isSingle: boolean) => {
-    try {
-      const storage = getStorage();
+  // const handleFileUpload = async (files: File[], isSingle: boolean) => {
+  //   try {
+  //     const storage = getStorage();
 
-      // Upload files
-      const uploadPromises = files?.map(async (file) => {
-        const storageRef = ref(
-          storage,
-          `${userData?.uid}/profile-photos/${file.name}`
-        );
-        await uploadBytes(storageRef, file);
+  //     // Upload files
+  //     const uploadPromises = files?.map(async (file) => {
+  //       const storageRef = ref(
+  //         storage,
+  //         `${userData?.uid}/profile-photos/${file.name}`
+  //       );
+  //       await uploadBytes(storageRef, file);
 
-        // Get the download URL of the uploaded image
-        const url = await getDownloadURL(storageRef);
+  //       // Get the download URL of the uploaded image
+  //       const url = await getDownloadURL(storageRef);
 
-        return {
-          name: file.name,
-          url: url,
-        };
-      });
+  //       return {
+  //         name: file.name,
+  //         url: url,
+  //       };
+  //     });
 
-      const uploadedFiles = await Promise.all(uploadPromises);
+  //     const uploadedFiles = await Promise.all(uploadPromises);
 
-      if (isSingle) {
-        // Update user profile with the single image information
-        setUser((prev) => ({
-          ...prev,
-          profilePhoto: uploadedFiles[0],
-        }));
-      } else {
-        // Update user profile with multiple image information
-        setUser((prev) => ({
-          ...prev,
-          professionalPhotos: [
-            ...(prev.professionalPhotos || []),
-            ...uploadedFiles,
-          ],
-        }));
-      }
-    } catch (error) {
-      console.error("Error uploading images:", error);
-    }
-  };
+  //     if (isSingle) {
+  //       // Update user profile with the single image information
+  //       setUser((prev) => ({
+  //         ...prev,
+  //         profilePhoto: uploadedFiles[0],
+  //       }));
+  //     } else {
+  //       // Update user profile with multiple image information
+  //       setUser((prev) => ({
+  //         ...prev,
+  //         professionalPhotos: [
+  //           ...(prev.professionalPhotos || []),
+  //           ...uploadedFiles,
+  //         ],
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading images:", error);
+  //   }
+  // };
 
   const addEducation = useCallback(() => {
     setEducations([
@@ -291,7 +284,7 @@ const Profile = () => {
                 handleDataChange("githubLink", newValue)
               }
             />
-            <Spacer direction="vertical" amount="10px" />
+            {/* <Spacer direction="vertical" amount="10px" />
             <ImageUploadContainer
               title="Profile Photo"
               maxImages={1}
@@ -302,7 +295,7 @@ const Profile = () => {
                   true
                 )
               }
-            />
+            /> */}
           </InnerProfileContainer>
         </ContentContainer>
         <TextElement theme="paragraph-bold" text="Education" colour="#9E9E9E" />
@@ -313,7 +306,7 @@ const Profile = () => {
           theme="dark"
           callback={() => addEducation()}
         />
-        <Spacer direction="vertical" amount="20px" />
+        {/* <Spacer direction="vertical" amount="20px" />
         <ImageUploadContainer
           title="Professional Photos"
           maxImages={10}
@@ -326,7 +319,7 @@ const Profile = () => {
           }
         />
 
-        <Spacer direction="vertical" />
+        <Spacer direction="vertical" /> */}
       </ProfileContainer>
       <ButtonContainer>
         <Button
