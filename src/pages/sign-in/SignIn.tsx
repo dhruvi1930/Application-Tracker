@@ -75,8 +75,6 @@ const SignIn = () => {
           <SubmitButton type="submit">Sign In</SubmitButton>
         </Form>
         <BottomParagraph>
-          <TextElement theme="paragraph" text="Forgot Password?" />
-          <Spacer direction="horizontal" amount="5px" />
           <TextElement theme="paragraph" text="Haven't try?" />
           <Spacer direction="horizontal" amount="2px" />
           <TextElement
